@@ -63,7 +63,7 @@ def assign2Dict(xml):
 #
 #@return The url to join the meeting
 
-def joinURL(meetingID, username, PW, SALT, URL):
+def joinURL(meetingID, username, PW, URL, SALT):
     url_join = URL + "api/join?"
     
     parameters = {'meetingID' : meetingID,
@@ -88,7 +88,7 @@ def joinURL(meetingID, username, PW, SALT, URL):
 #
 #@return The url to join the meeting
 
-def createMeetingURL(name, meetingID, attendeePW, moderatorPW, welcome, logoutURL, SALT, URL):
+def createMeetingURL(name, meetingID, attendeePW, moderatorPW, welcome, logoutURL, URL, SALT):
     url_create = URL + "api/create?"
     voiceBridge = 70000 + random.randint(0, 9999);
     parameters = {'name': name,
@@ -207,9 +207,9 @@ def endMeetingURL( meetingID, modPW, URL, SALT ):
 #    - False if an error occurs while parsing
 #    - Dictionary containing the values of the xml packet
 #
-def createMeeting( username, meetingID, welcomeString, mPW, aPW, SALT, URL, logoutURL ):
+def createMeeting( username, meetingID, welcomeString, mPW, aPW, logoutURL, URL, SALT):
 
-    create_url = createMeetingURL(username, meetingID, aPW, mPW, welcomeString, logoutURL, SALT, URL )
+    create_url = createMeetingURL(username, meetingID, aPW, mPW, welcomeString, logoutURL, URL, SALT )
     xml = bbb_wrap_load_file( create_url )
 
     if(xml):
