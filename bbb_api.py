@@ -98,16 +98,13 @@ def createMeetingURL(name, meetingID, attendeePW, moderatorPW, welcome, logoutUR
                   'voiceBridge' : voiceBridge,
                   'logoutURL' : logoutURL,
                   }
+   
+    if (welcome and welcome != ''):
+        parameters.update({'welcome': welcome.strip()})
 
     parameters = urllib.urlencode(parameters)
-   
-    welcome_parameters = ''
-    if (welcome and welcome != ''):
-        welcome_parameters = {'welcome': welcome.strip()} 
-        welcome_parameters = urllib.urlencode(welcome_parameters)
     
-    params = parameters + welcome_parameters
-    return url_create  + params + '&checksum=' + hashlib.sha1("create" + params + SALT).hexdigest() 
+    return url_create  + parameters + '&checksum=' + hashlib.sha1("create" + parameters + SALT).hexdigest() 
 
 
 #
