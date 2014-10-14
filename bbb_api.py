@@ -28,7 +28,7 @@ from xml.dom.minidom import Node
 def bbb_wrap_load_file(url):
     timeout = 10
     socket.setdefaulttimeout(timeout)
-    print(url)
+
     try:
         req = urllib.request.urlopen(url)
         return minidom.parse(req)
@@ -88,15 +88,16 @@ def joinMeetingURL(meetingID, username, PW, URL, SALT):
 #
 #@return The url to join the meeting
 
-def createMeetingURL(name, meetingID, attendeePW, moderatorPW, welcome, logoutURL, URL, SALT):
+def createMeetingURL(name, meetingID, attendeePW, moderatorPW, welcome, logoutURL, record, URL, SALT):
     url_create = URL + "api/create?"
     voiceBridge = 70000 + random.randint(0, 9999);
     parameters = {'name': name,
-                  'meetingID' : meetingID,
-                  'attendeePW' : attendeePW,
-                  'moderatorPW' : moderatorPW,
-                  'voiceBridge' : voiceBridge,
-                  'logoutURL' : logoutURL,
+                  'meetingID': meetingID,
+                  'attendeePW': attendeePW,
+                  'moderatorPW': moderatorPW,
+                  'voiceBridge': voiceBridge,
+                  'logoutURL': logoutURL,
+                  'record': record,
                   }
 
     #if (welcome and welcome != ''):
@@ -204,9 +205,9 @@ def endMeetingURL( meetingID, modPW, URL, SALT ):
 #    - False if an error occurs while parsing
 #    - Dictionary containing the values of the xml packet
 #
-def createMeeting(name, meeting_id, welcome_message, moderator_pw, attendee_pw, logout_url, url, secret):
+def createMeeting(name, meeting_id, welcome_message, moderator_pw, attendee_pw, logout_url, record, url, secret):
 
-    create_url = createMeetingURL(name, meeting_id, attendee_pw, moderator_pw, welcome_message, logout_url, url, secret)
+    create_url = createMeetingURL(name, meeting_id, attendee_pw, moderator_pw, welcome_message, logout_url, record, url, secret)
     xml = bbb_wrap_load_file( create_url )
 
     if(xml):
